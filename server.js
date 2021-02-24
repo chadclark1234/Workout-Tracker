@@ -2,10 +2,9 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const Workout = require("./models/workouts");
+const path = require("path");
 
 const PORT = process.env.PORT || 3000;
-
-const db = require("./models");
 
 const app = express();
 app.use(logger("dev"));
@@ -15,28 +14,10 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-app.get("/add-workout", (req, res) => {
-  const workout = new Workout({
-    exercises: [
-      {
-        type: "resistance",
-        name: "Bicep Curl",
-        duration: 20,
-        weight: 100,
-        reps: 10,
-        sets: 4,
-      },
-    ],
-  });
-  workout
-    .save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+// ALLOWS ACCESS TO PAGES \\
+// require("./routes/apiroutes")(app);
+require("./routes/htmlroutes")(app);
+const db = require("./models");
 
 // CONNECT TO MONGODB \\
 const dbURI =
