@@ -1,10 +1,13 @@
 let mongoose = require("mongoose");
-let db = require("../models");
+let Workout = require("../models/workouts.js");
 
-mongoose.connect("mongodb://localhost/workout", {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-});
+// mongoose.connect(
+//   "mongodb+srv://tracker:tracker1234@fitness-tracker.kbdrt.mongodb.net/tracker?retryWrites=true&w=majority",
+//   {
+//     useNewUrlParser: true,
+//     useFindAndModify: false,
+//   }
+// );
 
 let workoutSeed = [
   {
@@ -123,14 +126,22 @@ let workoutSeed = [
     ],
   },
 ];
-
-// db.Workout.deleteMany({})
-//   .then(() => db.Workout.collection.insertMany(workoutSeed))
-//   .then(data => {
-//     console.log(data.result.n + " records inserted!");
-//     process.exit(0);
-//   })
-//   .catch(err => {
-//     console.error(err);
-//     process.exit(1);
-//   });
+const dbURI =
+  "mongodb+srv://tracker:tracker1234@fitness-tracker.kbdrt.mongodb.net/tracker?retryWrites=true&w=majority";
+mongoose
+  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((result) => {
+    console.log("connected to db");
+    // app.listen(PORT);
+    Workout.deleteMany({})
+      .then(() => Workout.collection.insertMany(workoutSeed))
+      .then((data) => {
+        console.log(data.result.n + " records inserted!");
+        process.exit(0);
+      })
+      .catch((err) => {
+        console.error(err);
+        process.exit(1);
+      });
+  })
+  .catch((err) => console.log(err));
