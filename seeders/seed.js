@@ -126,10 +126,12 @@ let workoutSeed = [
     ],
   },
 ];
-const dbURI =
-  "mongodb+srv://tracker:tracker1234@fitness-tracker.kbdrt.mongodb.net/tracker?retryWrites=true&w=majority";
+
 mongoose
-  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then((result) => {
     console.log("connected to db");
     // app.listen(PORT);

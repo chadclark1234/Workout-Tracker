@@ -15,9 +15,9 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // ALLOWS ACCESS TO PAGES \\
-// require("./routes/apiroutes")(app);
+require("./routes/apiroutes")(app);
 require("./routes/htmlroutes")(app);
-const db = require("./models");
+// const db = require("./models");
 
 // CONNECT TO MONGODB \\
 const dbURI =
