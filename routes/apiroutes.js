@@ -3,6 +3,7 @@ const fs = require("fs");
 const Workout = require("../models/workouts.js");
 
 module.exports = (app) => {
+  // GRAB LAST WORKOUT FROM DB AND DISPLAY ON HOMEPAGE \\
   app.get("/api/workouts", (req, res) => {
     Workout.find({}, (err, workouts) => {
       if (err) {
@@ -10,19 +11,47 @@ module.exports = (app) => {
       } else {
         res.json(workouts);
       }
-      // console.log(workouts[6].exercises[0].duration);
     });
   });
+
+  // ADD EXERCISE TO THE LAST UNCOMPLETED WORKOUT \\
   app.put("/api/workouts/:id", (req, res) => {
-    console.log(req.body);
-    console.log(req.params.id);
     const id = req.params.id;
     Workout.findByIdAndUpdate(
       id,
       { $push: { exercises: req.body } },
-      (err, workouts) => {
+      (update) => {
+        res.json(update);
+      },
+      (err) => {
         console.log(err);
       }
     );
+  });
+
+  // ADD NEW EXERCISE TO DB \\
+  app.post("/api/workouts", (req, res) => {
+    // console.log(req);
+  });
+
+  //Display all workouts on range page
+  app.get("/api/workouts/range", ({}, res) => {
+    Workout.aggregate([
+      {
+        $addFields: {
+          totalDuration: {
+            $sum: "$exercises.duration",
+          },
+        },
+      },
+    ])
+      .sort({ _id: -1 })
+      .limit(7)
+      .then((Workout) => {
+        res.json(Workout);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
   });
 };

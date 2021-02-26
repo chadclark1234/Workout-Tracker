@@ -12,7 +12,7 @@ const API = {
     return json[json.length - 1];
   },
 
-  // needs route also
+  // add exercist to last uncompleted workout
   async addExercise(data) {
     const id = location.search.split("=")[1];
 
