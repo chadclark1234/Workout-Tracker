@@ -1,4 +1,5 @@
 const API = {
+  // grabs all workouts, then takes the last one, puts it in variable json,the sends it to workout.js, line 2
   async getLastWorkout() {
     let res;
     try {

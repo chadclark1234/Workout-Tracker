@@ -1,4 +1,5 @@
 async function initWorkout() {
+  // gets last workout array and displays it to the UI, also assigns the last workout id to the continue workout button to retrieve it when "continue workout"
   const lastWorkout = await API.getLastWorkout();
   console.log("Last workout:", lastWorkout);
   if (lastWorkout) {
