@@ -26,6 +26,7 @@ const API = {
 
     return json;
   },
+  // create new workout
   async createWorkout(data = {}) {
     const res = await fetch("/api/workouts", {
       method: "POST",

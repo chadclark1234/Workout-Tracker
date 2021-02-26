@@ -31,10 +31,16 @@ module.exports = (app) => {
 
   // ADD NEW EXERCISE TO DB \\
   app.post("/api/workouts", (req, res) => {
-    // console.log(req);
+    Workout.create(req.body)
+      .then((Workout) => {
+        res.json(Workout);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
   });
 
-  //Display all workouts on range page
+  // DISPLAY ALL WORKOUT DATA ON DASHBOARD PAGE \\
   app.get("/api/workouts/range", ({}, res) => {
     Workout.aggregate([
       {

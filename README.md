@@ -30,7 +30,7 @@ I faced many challenges with this project as it required the use of many new app
 
 ## Project Glimpse
 
-![ProjectPic](./public/images/pic.PNG)
+![ProjectPic](public/images/demo.gif)
 
 ## Credits
 
